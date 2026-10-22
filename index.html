@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>F.S.D 公佈欄</title>
+<meta name="description" content="Defly逆飛輪 的行前通知與活動公告，最新消息都在這裡。">
+<meta name="theme-color" content="#FFD60A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="F.S.D 公佈欄">
+<meta property="og:title" content="F.S.D 公佈欄">
+<meta property="og:description" content="Defly逆飛輪 的行前通知與活動公告，最新消息都在這裡。">
+<meta property="og:locale" content="zh_TW">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body style="padding-bottom:24px">
+<main class="wrap">
+  <header class="home-hero">
+    <span class="eyebrow">Defly逆飛輪</span>
+    <h1>F.S.D 公佈欄</h1>
+    <p>行前通知・活動公告，最新消息都在這裡 🛼</p>
+  </header>
+  <nav class="filters" aria-label="分類篩選"><button type="button" data-f="" aria-pressed="true">全部</button><button type="button" data-f="比賽" aria-pressed="false">比賽</button></nav>
+  <div class="list" id="list">
+    <a class="item" href="notices/2026-11-01-zhongzheng-cup.html" data-cat="比賽" data-date="2026-11-01">
+      <div class="row"><span class="cat 比賽">比賽</span><time datetime="2026-11-01">11/1（日）</time></div>
+      <h2>115台北市中正盃 行前通知</h2>
+      <p>台北市迎風溜冰場｜穿逆飛輪黃T｜當天河濱路跑 06:00~10:30 交通管制，早場選手開車請 07:30 前抵達。</p>
+      <span class="more">查看詳情 ›</span>
+    </a>
+  </div>
+  <p class="empty" id="empty" hidden>這個分類目前沒有公告</p>
+  <footer>F.S.D 公佈欄・Defly逆飛輪</footer>
+</main>
+<script>
+(function(){
+  var today=new Date(), t=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
+  var items=[].slice.call(document.querySelectorAll('.item'));
+  items.forEach(function(a){ var d=a.getAttribute('data-date');
+    if(d<t) a.classList.add('past');
+    else if(items.indexOf(a)===items.filter(function(x){return x.getAttribute('data-date')>=t}).length-1){
+      var s=document.createElement('span'); s.className='new'; s.textContent='即將到來'; a.querySelector('.row').appendChild(s);}
+  });
+  var btns=[].slice.call(document.querySelectorAll('.filters button'));
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    var f=b.getAttribute('data-f'), n=0;
+    btns.forEach(function(x){x.setAttribute('aria-pressed', x===b?'true':'false')});
+    items.forEach(function(a){ var show=!f||a.getAttribute('data-cat')===f; a.hidden=!show; if(show)n++; });
+    document.getElementById('empty').hidden=n>0;
+  }); });
+})();
+</script>
+</body>
+</html>
