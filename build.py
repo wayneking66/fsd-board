@@ -30,7 +30,7 @@ cards = "\n".join(f'''    <a class="item {esc(n["category"])}{" has-img" if n.ge
     </a>''' for n in items)
 buttons = "".join(f'<button type="button" data-f="{esc(c)}" aria-pressed="false">{esc(c)}</button>' for c in cats)
 og_url = f'<meta property="og:url" content="{esc(BASE)}/">' if BASE else ""
-desc = "Defly逆飛輪 的行前通知與活動公告，最新消息都在這裡。"
+desc = "F.S.D平花班 的行前通知與活動公告，最新消息都在這裡。"
 
 page = f'''<!doctype html>
 <html lang="zh-Hant-TW">
@@ -61,12 +61,12 @@ page = f'''<!doctype html>
 <main class="wrap">
   <header class="site-head">
     <img src="assets/logo-192.png" alt="F.S.D KIDS 標誌" width="96" height="96">
-    <div><span class="team">Defly逆飛輪</span><h1><b>F.S.D</b> 公佈欄</h1></div>
+    <div><span class="team">F.S.D平花班</span><h1><b>F.S.D</b> 公佈欄</h1></div>
   </header>
   <p class="tagline">行前通知・活動公告，最新消息都在這裡 🛼</p>
   <figure class="photo" style="margin-left:0;margin-right:0">
-    <img src="assets/team.jpg" alt="Defly逆飛輪 團體照" width="1600" height="901">
-    <figcaption><i></i>Defly逆飛輪</figcaption><span class="bar"></span>
+    <img src="assets/team.jpg" alt="F.S.D平花班 團體照" width="1600" height="901">
+    <figcaption><i></i>F.S.D平花班</figcaption><span class="bar"></span>
   </figure>
   <h2 class="sec-h">最新公告</h2>
   <nav class="filters" aria-label="分類篩選"><button type="button" data-f="" aria-pressed="true">全部</button>{buttons}</nav>
@@ -74,7 +74,7 @@ page = f'''<!doctype html>
 {cards}
   </div>
   <p class="empty" id="empty" hidden>這個分類目前沒有公告</p>
-  <footer>F.S.D 公佈欄・Defly逆飛輪</footer>
+  <footer>F.S.D 公佈欄・F.S.D平花班</footer>
 </main>
 <script>
 (function(){{
