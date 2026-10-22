@@ -41,3 +41,9 @@ deploy-github-pages.sh     第一次發布到 GitHub Pages
 
 ## 第一次發布
 `gh auth login` 後執行 `./deploy-github-pages.sh`（建立公開 repo `fsd-board` 並開啟 Pages）。
+
+## 圖片資源
+- `assets/logo.png`（透明背景原尺寸）、`assets/logo-512.png`、`assets/logo-192.png`（頁首用）
+- `favicon.ico`、`assets/favicon-32.png`、`assets/apple-touch-icon.png`
+- `assets/team.jpg` 首頁團體照；`assets/og.jpg` LINE／社群分享預覽圖（1200×630）
+- 新公告頁沿用範本中的 `og:image`（`../assets/og.jpg`）；執行 `python3 build.py <網址>` 會自動改成絕對網址（LINE 需要）。

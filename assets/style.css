@@ -2,6 +2,7 @@
 :root{
   --y:#FFD60A; --y2:#FFE866; --y-soft:#FFF8D6; --ink:#1B1B1F; --ink2:#45464D; --muted:#6B6C73;
   --bg:#FAFAF7; --card:#fff; --line:#ECEAE2; --warn:#C2410C; --warn-bg:#FFF1E6; --warn-line:#FDBA74;
+  --p:#8E3BB8; --pk:#D9468F; --p-soft:#F6ECFB; --grad:linear-gradient(90deg,#FFD60A,#FF9F1C 40%,#E0479E 72%,#8E3BB8);
   --r:18px; --shadow:0 2px 10px rgba(27,27,31,.06),0 1px 2px rgba(27,27,31,.05);
 }
 *{box-sizing:border-box}
@@ -139,3 +140,33 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px 0 8px}
 .item.past{opacity:.72}
 .empty{text-align:center;color:var(--muted);padding:30px 0}
 @media (min-width:480px){.hero h1{font-size:32px}.info{grid-template-columns:1fr 1fr}.info .wide{grid-column:1/-1}}
+
+/* ---- logo / photo additions ---- */
+.brand{display:inline-flex;align-items:center;gap:6px}
+.brand img{width:34px;height:34px}
+.topbar{border-bottom:0}
+.topbar:after{content:"";display:block;height:3px;background:var(--grad)}
+.site-head{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
+.site-head img{width:84px;height:84px;flex:0 0 auto;filter:drop-shadow(0 3px 8px rgba(142,59,184,.25))}
+.site-head h1{font-size:30px;font-weight:900;letter-spacing:.02em}
+.site-head h1 b{background:var(--y);padding:0 8px;border-radius:8px;box-decoration-break:clone}
+.site-head p{margin:4px 0 0;color:var(--ink2);font-weight:500;font-size:15px}
+.site-head .team{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.06em;color:#fff;background:var(--p);padding:2px 10px;border-radius:999px;margin-bottom:4px}
+.photo{position:relative;margin:6px 0 4px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(27,27,31,.14);aspect-ratio:16/9;background:#eee}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(30,12,40,.55),rgba(30,12,40,0) 45%)}
+.photo figcaption{position:absolute;left:14px;bottom:12px;z-index:1;color:#fff;font-weight:900;font-size:16px;display:flex;align-items:center;gap:8px;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.photo figcaption i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--y);box-shadow:0 0 0 3px rgba(255,214,10,.35)}
+.photo .bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--grad);z-index:1}
+.sec-h{font-size:18px;font-weight:900;margin:22px 0 0;display:flex;align-items:center;gap:8px}
+.sec-h:before{content:"";width:6px;height:20px;border-radius:3px;background:var(--grad)}
+.filters button[aria-pressed="true"]{background:var(--p);border-color:var(--p)}
+.cat.比賽{background:var(--y);color:var(--ink)}
+.new{background:var(--pk)}
+.item{border-left:5px solid var(--y)}
+.item.活動{border-left-color:var(--pk)}
+.item .more{border-bottom-color:var(--pk)}
+.hero .eyebrow{background:var(--p);color:#fff}
+.site-head{padding:16px 0 4px;gap:10px}
+.site-head img{width:96px;height:96px;margin-left:-6px}
+.tagline{margin:0 0 12px;color:var(--ink2);font-weight:500;font-size:15px}
