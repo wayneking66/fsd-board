@@ -18,7 +18,11 @@ for n in items:
 
 def esc(s): return html.escape(s, quote=True)
 
-cards = "\n".join(f'''    <a class="item {esc(n["category"])}" href="{esc(n["url"])}" data-cat="{esc(n["category"])}" data-date="{esc(n["date"])}">
+def thumb(n):
+    if not n.get("image"): return ""
+    return f'<span class="thumb"><img src="{esc(n["image"])}" alt="{esc(n.get("image_caption",""))}" loading="lazy"></span>'
+cards = "\n".join(f'''    <a class="item {esc(n["category"])}{" has-img" if n.get("image") else ""}" href="{esc(n["url"])}" data-cat="{esc(n["category"])}" data-date="{esc(n["date"])}">
+      {thumb(n)}
       <div class="row"><span class="cat {esc(n["category"])}">{esc(n["category"])}</span><time datetime="{esc(n["date"])}">{esc(n.get("display_date") or n["date"])}</time></div>
       <h2>{esc(n["title"])}</h2>
       <p>{esc(n["summary"])}</p>
@@ -105,6 +109,23 @@ if BASE:
         tag = f'<meta property="og:url" content="{esc(BASE)}/{esc(n["url"])}"><!--OG_ABS-->'
         s = re.sub(r'(<meta property="og:url"[^>]*>)?<!--OG_ABS-->', tag, s, count=1)
         p.write_text(s, encoding="utf-8")
+# per-notice banner image (between <!--BANNER--> and <!--/BANNER--> in each notice page)
+for n in items:
+    p = ROOT / n["url"]
+    if not p.exists(): continue
+    t = p.read_text(encoding="utf-8")
+    block = ""
+    if n.get("image"):
+        cr = esc(n.get("image_credit", ""))
+        if n.get("image_credit_url"):
+            cr = f'<a href="{esc(n["image_credit_url"])}" target="_blank" rel="noopener">{cr}</a>'
+        cap = esc(n.get("image_caption", ""))
+        block = (f'\n  <figure class="photo venue"><img src="../{esc(n["image"])}" alt="{cap}" width="1600" height="900">'
+                 f'<figcaption><i></i>{cap}</figcaption><span class="bar"></span></figure>'
+                 + (f'\n  <p class="credit">{cr}</p>' if cr else "") + "\n  ")
+    t = re.sub(r"<!--BANNER-->.*?<!--/BANNER-->", lambda m: "<!--BANNER-->" + block + "<!--/BANNER-->", t, flags=re.S)
+    p.write_text(t, encoding="utf-8")
+
 if BASE:
     for f in [ROOT / "index.html"] + sorted((ROOT / "notices").glob("*.html")):
         t = f.read_text(encoding="utf-8")

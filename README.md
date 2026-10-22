@@ -30,6 +30,8 @@ deploy-github-pages.sh     第一次發布到 GitHub Pages
      "posted": "2026-12-01"
    }
    ```
+   （選填）封面照片：再加 `"image": "assets/xxx.jpg"`、`"image_caption": "圖說"`、`"image_credit": "照片來源：…"`、`"image_credit_url": "https://…"`。
+   build.py 會把照片放進公告頁的 `<!--BANNER--><!--/BANNER-->` 位置（範本已有），首頁卡片也會顯示縮圖。照片請先縮到約 1600px 寬、350 KB 以下。
    分類 `category` 可用：比賽、活動、公告（有對應顏色；其他文字也可，會用黃色）。首頁自動依日期新→舊排序，
    已過日期的會變淡，最近一則未來公告會標「即將到來」。
 4. 重建首頁並發布：
