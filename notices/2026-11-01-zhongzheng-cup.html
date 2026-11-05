@@ -23,7 +23,7 @@
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-end="2026-11-01">
 <header class="topbar"><div class="wrap">
   <a class="back" href="../index.html" aria-label="回公佈欄首頁"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>公佈欄</a>
   <span class="brand"><img src="../assets/logo-192.png" alt="" width="34" height="34"><b>F.S.D</b> 公佈欄</span>
@@ -116,5 +116,20 @@
 </main>
 
 <div class="callbar"><a href="tel:0988359317">📞 聯絡教練 <span>0988-359-317</span></a></div>
+<!--ENDED_JS-->
+<script>
+(function(){
+  var end=document.body.getAttribute('data-end');
+  if(!end) return;
+  var today=new Date(), t=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
+  if(end>=t) return;
+  var row=document.querySelector('.hero-meta');
+  if(!row||row.querySelector('.ended')) return;
+  var s=document.createElement('span'); s.className='pill ended'; s.textContent='已結束';
+  var first=row.querySelector('.pill');
+  if(first) first.insertAdjacentElement('afterend', s); else row.appendChild(s);
+})();
+</script>
+<!--/ENDED_JS-->
 </body>
 </html>

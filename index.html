@@ -37,14 +37,14 @@
   <h2 class="sec-h">最新公告</h2>
   <nav class="filters" aria-label="分類篩選"><button type="button" data-f="" aria-pressed="true">全部</button><button type="button" data-f="活動" aria-pressed="false">活動</button><button type="button" data-f="比賽" aria-pressed="false">比賽</button></nav>
   <div class="list" id="list">
-    <a class="item 活動 has-img" href="notices/2027-01-21-winter-fun.html" data-cat="活動" data-date="2027-01-21">
+    <a class="item 活動 has-img" href="notices/2027-01-21-winter-fun.html" data-cat="活動" data-date="2027-01-21" data-end="2027-02-03">
       <span class="thumb"><img src="assets/winter-fun-cover.jpg" alt="F.S.D 路溜" loading="lazy"></span>
       <div class="row"><span class="cat 活動">活動</span><time datetime="2027-01-21">1/21（四）～2/3（三）</time></div>
       <h2>2027 F.S.D 寒假營隊 Winter fun 開始報名囉！</h2>
       <p>直排輪+平地花式+路溜+滑雪+匹克球｜中壢 1/21–1/22、龍潭 1/25–1/29、韓國滑雪 1/30–2/3｜早鳥優惠限時開跑，名額有限</p>
       <span class="more">查看詳情 ›</span>
     </a>
-    <a class="item 比賽 has-img" href="notices/2026-11-01-zhongzheng-cup.html" data-cat="比賽" data-date="2026-11-01">
+    <a class="item 比賽 has-img" href="notices/2026-11-01-zhongzheng-cup.html" data-cat="比賽" data-date="2026-11-01" data-end="2026-11-01">
       <span class="thumb"><img src="assets/venue-yingfeng.jpg" alt="迎風溜冰場" loading="lazy"></span>
       <div class="row"><span class="cat 比賽">比賽</span><time datetime="2026-11-01">11/1（日）</time></div>
       <h2>115台北市中正盃 行前通知</h2>
@@ -59,8 +59,9 @@
 (function(){
   var today=new Date(), t=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
   var items=[].slice.call(document.querySelectorAll('.item'));
-  items.forEach(function(a){ var d=a.getAttribute('data-date');
-    if(d<t) a.classList.add('past');
+  items.forEach(function(a){ var d=a.getAttribute('data-date'), end=a.getAttribute('data-end')||d;
+    if(end<t){ a.classList.add('past');
+      var s=document.createElement('span'); s.className='ended'; s.textContent='已結束'; a.querySelector('.row').appendChild(s); }
     else if(items.indexOf(a)===items.filter(function(x){return x.getAttribute('data-date')>=t}).length-1){
       var s=document.createElement('span'); s.className='new'; s.textContent='即將到來'; a.querySelector('.row').appendChild(s);}
   });
