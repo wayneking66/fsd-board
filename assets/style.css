@@ -66,6 +66,10 @@ section{margin:22px 0}
 .btn .arr{margin-left:auto;font-size:20px}
 .btn-y{background:var(--y);color:var(--ink)}
 .btn-d{background:var(--ink);color:#fff}
+.btn-g{background:#14804A;color:#fff}
+.btn-b{background:#1D4ED8;color:#fff}
+.camp-date{margin:10px 0 0;font-size:22px;font-weight:900;line-height:1.25;white-space:nowrap}
+.camp-date span{display:block;margin-bottom:2px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--muted)}
 
 /* warning */
 .warn{background:var(--warn-bg);border:2px solid var(--warn-line);border-radius:var(--r);padding:16px;}
@@ -163,6 +167,8 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px 0 8px}
 .filters button[aria-pressed="true"]{background:var(--p);border-color:var(--p)}
 .cat.比賽{background:var(--y);color:var(--ink)}
 .new{background:var(--pk)}
+.ended{font-size:12px;font-weight:900;color:#fff;background:var(--muted);padding:2px 8px;border-radius:999px}
+.pill.ended{font-size:15px;padding:6px 12px}
 .item{border-left:5px solid var(--y)}
 .item.活動{border-left-color:var(--pk)}
 .item .more{border-bottom-color:var(--pk)}

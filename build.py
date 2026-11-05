@@ -21,7 +21,11 @@ def esc(s): return html.escape(s, quote=True)
 def thumb(n):
     if not n.get("image"): return ""
     return f'<span class="thumb"><img src="{esc(n["image"])}" alt="{esc(n.get("image_caption",""))}" loading="lazy"></span>'
-cards = "\n".join(f'''    <a class="item {esc(n["category"])}{" has-img" if n.get("image") else ""}" href="{esc(n["url"])}" data-cat="{esc(n["category"])}" data-date="{esc(n["date"])}">
+def end_of(n):
+    """Last day the notice is current. Optional end_date covers multi-day events."""
+    return n.get("end_date") or n["date"]
+
+cards = "\n".join(f'''    <a class="item {esc(n["category"])}{" has-img" if n.get("image") else ""}" href="{esc(n["url"])}" data-cat="{esc(n["category"])}" data-date="{esc(n["date"])}" data-end="{esc(end_of(n))}">
       {thumb(n)}
       <div class="row"><span class="cat {esc(n["category"])}">{esc(n["category"])}</span><time datetime="{esc(n["date"])}">{esc(n.get("display_date") or n["date"])}</time></div>
       <h2>{esc(n["title"])}</h2>
@@ -80,8 +84,9 @@ page = f'''<!doctype html>
 (function(){{
   var today=new Date(), t=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
   var items=[].slice.call(document.querySelectorAll('.item'));
-  items.forEach(function(a){{ var d=a.getAttribute('data-date');
-    if(d<t) a.classList.add('past');
+  items.forEach(function(a){{ var d=a.getAttribute('data-date'), end=a.getAttribute('data-end')||d;
+    if(end<t){{ a.classList.add('past');
+      var s=document.createElement('span'); s.className='ended'; s.textContent='已結束'; a.querySelector('.row').appendChild(s); }}
     else if(items.indexOf(a)===items.filter(function(x){{return x.getAttribute('data-date')>=t}}).length-1){{
       var s=document.createElement('span'); s.className='new'; s.textContent='即將到來'; a.querySelector('.row').appendChild(s);}}
   }});
@@ -125,6 +130,40 @@ for n in items:
                  + (f'\n  <p class="credit">{cr}</p>' if cr else "") + "\n  ")
     t = re.sub(r"<!--BANNER-->.*?<!--/BANNER-->", lambda m: "<!--BANNER-->" + block + "<!--/BANNER-->", t, flags=re.S)
     p.write_text(t, encoding="utf-8")
+
+# 「已結束」 on each notice page, from data-end (view-time, so it updates without a rebuild)
+ENDED_JS = """<!--ENDED_JS-->
+<script>
+(function(){
+  var end=document.body.getAttribute('data-end');
+  if(!end) return;
+  var today=new Date(), t=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
+  if(end>=t) return;
+  var row=document.querySelector('.hero-meta');
+  if(!row||row.querySelector('.ended')) return;
+  var s=document.createElement('span'); s.className='pill ended'; s.textContent='已結束';
+  var first=row.querySelector('.pill');
+  if(first) first.insertAdjacentElement('afterend', s); else row.appendChild(s);
+})();
+</script>
+<!--/ENDED_JS-->"""
+
+def apply_ended(html, end):
+    end = esc(end)
+    if re.search(r"""<body\b[^>]*\sdata-end=["']""", html):
+        html = re.sub(r"""(<body\b[^>]*\sdata-end=["'])[^"']*(["'])""", lambda m: m.group(1) + end + m.group(2), html, count=1)
+    else:
+        html = re.sub(r"<body\b", f'<body data-end="{end}"', html, count=1)
+    if "<!--ENDED_JS-->" in html:
+        html = re.sub(r"<!--ENDED_JS-->.*?<!--/ENDED_JS-->", ENDED_JS, html, count=1, flags=re.S)
+    else:
+        html = html.replace("</body>", ENDED_JS + "\n</body>", 1)
+    return html
+
+for n in items:
+    p = ROOT / n["url"]
+    if not p.exists(): continue
+    p.write_text(apply_ended(p.read_text(encoding="utf-8"), end_of(n)), encoding="utf-8")
 
 if BASE:
     for f in [ROOT / "index.html"] + sorted((ROOT / "notices").glob("*.html")):
